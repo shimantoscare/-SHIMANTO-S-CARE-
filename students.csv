@@ -1,4 +1,3 @@
-Roll,Name,Class,Contact
-101,Sumon,10,01710000000
-102,Rina,9,01711111111
-103,Jamal,8,01712222222
+Roll,Name,Class,Section,Batch,Contact,Address,Guardian,Remarks
+101,Rahim,8,A,2025,01700000000,Rangpur,Mr. Rahman,Good
+102,Karim,9,B,2025,01800000000,Dinajpur,Mr. Karim,Needs Improvement
