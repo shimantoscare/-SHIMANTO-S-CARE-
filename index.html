@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHIMANTO'S CARE</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+    header {
+      background-color: #008080;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #004d4d;
+      overflow: hidden;
+    }
+    nav a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      background-color: #006666;
+    }
+    .container {
+      padding: 20px;
+    }
+    input[type="text"], textarea {
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 400px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #ddd;
+    }
+    form {
+      max-width: 500px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    form button {
+      padding: 10px 20px;
+      background-color: #008080;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SHIMANTO'S CARE</h1>
+    <p>Welcome to our official coaching center website</p>
+  </header>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#notices">Notices</a>
+    <a href="#results">Results</a>
+    <a href="#students">Students</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="container" id="home">
+    <h2>About Us</h2>
+    <p>SHIMANTO'S CARE is a trusted coaching center dedicated to helping students achieve academic excellence through structured guidance, experienced teachers, and personalized attention.</p>
+  </div>
+
+  <div class="container" id="notices">
+    <h2>Notices</h2>
+    <ul>
+      <li>?? Midterm exam will start from 5th June 2025.</li>
+      <li>?? New batch for class 9 starts from 1st July 2025.</li>
+      <li>?? Admission open for all classes – contact us for more info.</li>
+    </ul>
+  </div>
+
+  <div class="container" id="results">
+    <h2>Search Exam Results</h2>
+    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Enter Roll or Name..." />
+    <table id="resultsTable">
+      <thead>
+        <tr>
+          <th>Roll</th>
+          <th>Name</th>
+          <th>Class</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="container" id="students">
+    <h2>Student List</h2>
+    <input type="text" id="studentSearch" onkeyup="searchStudent()" placeholder="Search by name or class...">
+    <table id="studentTable">
+      <thead>
+        <tr>
+          <th>Roll</th>
+          <th>Name</th>
+          <th>Class</th>
+          <th>Contact</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="container" id="contact">
+    <h2>Contact Us</h2>
+    <form>
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" required><br />
+      <label for="email">Email:</label><br />
+      <input type="text" id="email" name="email" required><br />
+      <label for="message">Message:</label><br />
+      <textarea id="message" name="message" rows="4" required></textarea><br />
+      <button type="submit">Send</button>
+    </form>
+    <p><strong>Address:</strong> Shimanto Road, Dhaka<br>
+    <strong>Phone:</strong> 01xxxxxxxxx</p>
+  </div>
+
+  <script>
+    function searchTable() {
+      let input = document.getElementById("searchInput").value.toUpperCase();
+      let trs = document.querySelectorAll("#resultsTable tbody tr");
+      trs.forEach(row => {
+        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
+      });
+    }
+
+    function searchStudent() {
+      let input = document.getElementById("studentSearch").value.toUpperCase();
+      let trs = document.querySelectorAll("#studentTable tbody tr");
+      trs.forEach(row => {
+        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
+      });
+    }
+
+    // Load data from CSV file
+    window.onload = function() {
+      Papa.parse("results.csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+          let tbody = document.querySelector("#resultsTable tbody");
+          results.data.forEach(row => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Result}</td>`;
+            tbody.appendChild(tr);
+          });
+        }
+      });
+
+      Papa.parse("students.csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+          let tbody = document.querySelector("#studentTable tbody");
+          results.data.forEach(row => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Contact}</td>`;
+            tbody.appendChild(tr);
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
