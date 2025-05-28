@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,20 +6,77 @@
   <title>SHIMANTO'S CARE</title>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f8f8f8; }
-    header { display: flex; align-items: center; gap: 20px; background-color: #008080; color: white; padding: 20px; }
-    header img { height: 80px; }
-    nav { background-color: #004d4d; overflow: hidden; }
-    nav a { float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none; }
-    nav a:hover { background-color: #006666; }
-    .container { padding: 20px; display: none; }
-    .active { display: block; }
-    input[type="text"], textarea { padding: 10px; margin-bottom: 20px; width: 100%; max-width: 400px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
-    th { background-color: #ddd; }
-    form { max-width: 500px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-    form button { padding: 10px 20px; background-color: #008080; color: white; border: none; cursor: pointer; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background-color: #008080;
+      color: white;
+      padding: 20px;
+    }
+    header img {
+      height: 80px;
+    }
+    nav {
+      background-color: #004d4d;
+      overflow: hidden;
+    }
+    nav a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      background-color: #006666;
+    }
+    .container {
+      padding: 20px;
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+    input[type="text"], textarea {
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 400px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #ddd;
+    }
+    form {
+      max-width: 500px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    form button {
+      padding: 10px 20px;
+      background-color: #008080;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -46,7 +102,7 @@
 
   <div class="container" id="notices">
     <h2>Notices</h2>
-    <ul id="noticeList">
+    <ul>
       <li>📢 প্রতিদিন ক্লাস টেস্ট এবং অন্যান্য বিষয়ের ক্লাস হবে।</li>
       <li>📢 ক্লাস টেস্টে অংশগ্রহণ বাধ্যতামূলক।</li>
       <li>📢 প্রতিদিনের ক্লাস টেস্টের রেজাল্ট মেসেজের মাধ্যমে জানিয়ে দেওয়া হবে।</li>
@@ -83,12 +139,7 @@
           <th>Roll</th>
           <th>Name</th>
           <th>Class</th>
-          <th>Section</th>
-          <th>Batch</th>
           <th>Contact</th>
-          <th>Address</th>
-          <th>Guardian Name</th>
-          <th>Remarks</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -113,7 +164,9 @@
 
   <script>
     function showSection(id) {
-      document.querySelectorAll('.container').forEach(div => div.classList.remove('active'));
+      document.querySelectorAll('.container').forEach(div => {
+        div.classList.remove('active');
+      });
       document.getElementById(id).classList.add('active');
     }
 
@@ -134,28 +187,27 @@
     }
 
     window.onload = function() {
-      Papa.parse("results.csv", {
+      Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vTnhTBgqkGkdw0cWUmYpqdbDhuJXqtc7GEVFA6Ld41CbAkqU396q9GVXlC0ngZ39mBHjypqSp0Jsa5p/pub?output=csv", {
         download: true,
         header: true,
         complete: function(results) {
-          let tbody = document.querySelector("#resultsTable tbody");
-          results.data.forEach(row => {
-            let tr = document.createElement("tr");
-            tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Result}</td>`;
-            tbody.appendChild(tr);
-          });
-        }
-      });
+          let tbodyResults = document.querySelector("#resultsTable tbody");
+          let tbodyStudents = document.querySelector("#studentTable tbody");
 
-      Papa.parse("students.csv", {
-        download: true,
-        header: true,
-        complete: function(results) {
-          let tbody = document.querySelector("#studentTable tbody");
           results.data.forEach(row => {
-            let tr = document.createElement("tr");
-            tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Section}</td><td>${row.Batch}</td><td>${row.Contact}</td><td>${row.Address}</td><td>${row.Guardian}</td><td>${row.Remarks}</td>`;
-            tbody.appendChild(tr);
+            // Check if it's a result entry
+            if (row.Result) {
+              let tr = document.createElement("tr");
+              tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Result}</td>`;
+              tbodyResults.appendChild(tr);
+            }
+
+            // If it's a student entry
+            if (row.Contact) {
+              let tr = document.createElement("tr");
+              tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Contact}</td>`;
+              tbodyStudents.appendChild(tr);
+            }
           });
         }
       });
