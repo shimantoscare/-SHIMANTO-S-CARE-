@@ -13,10 +13,15 @@
       background-color: #f8f8f8;
     }
     header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
       background-color: #008080;
       color: white;
       padding: 20px;
-      text-align: center;
+    }
+    header img {
+      height: 80px;
     }
     nav {
       background-color: #004d4d;
@@ -35,6 +40,10 @@
     }
     .container {
       padding: 20px;
+      display: none;
+    }
+    .active {
+      display: block;
     }
     input[type="text"], textarea {
       padding: 10px;
@@ -72,18 +81,21 @@
 </head>
 <body>
   <header>
-    <h1>SHIMANTO'S CARE</h1>
-    <p>Welcome to our official coaching center website</p>
+    <img src="images/logo.jpg" alt="Shimanto's Care Logo" />
+    <div>
+      <h1>SHIMANTO'S CARE</h1>
+      <p>We Care to Make your Future Brighter</p>
+    </div>
   </header>
   <nav>
-    <a href="#home">Home</a>
-    <a href="#notices">Notices</a>
-    <a href="#results">Results</a>
-    <a href="#students">Students</a>
-    <a href="#contact">Contact</a>
+    <a href="#home" onclick="showSection('home')">Home</a>
+    <a href="#notices" onclick="showSection('notices')">Notices</a>
+    <a href="#results" onclick="showSection('results')">Results</a>
+    <a href="#students" onclick="showSection('students')">Students</a>
+    <a href="#contact" onclick="showSection('contact')">Contact</a>
   </nav>
 
-  <div class="container" id="home">
+  <div class="container active" id="home">
     <h2>About Us</h2>
     <p>SHIMANTO'S CARE is a trusted coaching center dedicated to helping students achieve academic excellence through structured guidance, experienced teachers, and personalized attention.</p>
   </div>
@@ -151,6 +163,13 @@
   </div>
 
   <script>
+    function showSection(id) {
+      document.querySelectorAll('.container').forEach(div => {
+        div.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
     function searchTable() {
       let input = document.getElementById("searchInput").value.toUpperCase();
       let trs = document.querySelectorAll("#resultsTable tbody tr");
