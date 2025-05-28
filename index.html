@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,7 +82,7 @@
 </head>
 <body>
   <header>
-    <img src="images/logo.jpg" alt="" />
+    <img src="logo.jpg" alt="" />
     <div>
       <h1>SHIMANTO'S CARE</h1>
       <p>We Care to Make your Future Brighter</p>
@@ -89,29 +90,13 @@
   </header>
   <nav>
     <a href="#home" onclick="showSection('home')">Home</a>
-    <a href="#notices" onclick="showSection('notices')">Notices</a>
     <a href="#results" onclick="showSection('results')">Results</a>
-    <a href="#students" onclick="showSection('students')">Students</a>
     <a href="#contact" onclick="showSection('contact')">Contact</a>
   </nav>
 
   <div class="container active" id="home">
     <h2>About Us</h2>
     <p>SHIMANTO'S CARE is a trusted coaching center dedicated to helping students achieve academic excellence through structured guidance, experienced teachers, and personalized attention.</p>
-  </div>
-
-  <div class="container" id="notices">
-    <h2>Notices</h2>
-    <ul>
-      <li>📢 প্রতিদিন ক্লাস টেস্ট এবং অন্যান্য বিষয়ের ক্লাস হবে।</li>
-      <li>📢 ক্লাস টেস্টে অংশগ্রহণ বাধ্যতামূলক।</li>
-      <li>📢 প্রতিদিনের ক্লাস টেস্টের রেজাল্ট মেসেজের মাধ্যমে জানিয়ে দেওয়া হবে।</li>
-      <li>📢 প্রতিটি ছাত্রছাত্রীকে সময়মতো কোচিংয়ে উপস্থিত থাকতে হবে।</li>
-      <li>📢 অনুপস্থিত শিক্ষার্থীর অভিভাবককে ফোনে জানানো হবে।</li>
-      <li>📢 পরীক্ষার রুটিন ওয়েবসাইট এবং কোচিং অফিসে প্রকাশ করা হয়েছে।</li>
-      <li>📢 ভালো ফলাফলের জন্য ক্লাসে মনোযোগ এবং নিয়মিত উপস্থিতি জরুরি।</li>
-      <li>📢 সকল তথ্য ওয়েবসাইটে নিয়মিত আপডেট করা হবে, নিয়মিত ভিজিট করুন।</li>
-    </ul>
   </div>
 
   <div class="container" id="results">
@@ -124,22 +109,6 @@
           <th>Name</th>
           <th>Class</th>
           <th>Result</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-
-  <div class="container" id="students">
-    <h2>Student List</h2>
-    <input type="text" id="studentSearch" onkeyup="searchStudent()" placeholder="Search by name or class...">
-    <table id="studentTable">
-      <thead>
-        <tr>
-          <th>Roll</th>
-          <th>Name</th>
-          <th>Class</th>
-          <th>Contact</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -178,19 +147,11 @@
       });
     }
 
-    function searchStudent() {
-      let input = document.getElementById("studentSearch").value.toUpperCase();
-      let trs = document.querySelectorAll("#studentTable tbody tr");
-      trs.forEach(row => {
-        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
-      });
-    }
-
-    window.onload = function() {
-      Papa.parse("results.csv", {
+    window.onload = function () {
+      Papa.parse("https://docs.google.com/spreadsheets/d/1b7yxYVz5jvVX_zBaUm4sUpChfs7yycAhRflntdkYEdQ/export?format=csv", {
         download: true,
         header: true,
-        complete: function(results) {
+        complete: function (results) {
           let tbody = document.querySelector("#resultsTable tbody");
           results.data.forEach(row => {
             let tr = document.createElement("tr");
@@ -199,20 +160,7 @@
           });
         }
       });
-
-      Papa.parse("students.csv", {
-        download: true,
-        header: true,
-        complete: function(results) {
-          let tbody = document.querySelector("#studentTable tbody");
-          results.data.forEach(row => {
-            let tr = document.createElement("tr");
-            tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Contact}</td>`;
-            tbody.appendChild(tr);
-          });
-        }
-      });
-    }
+    };
   </script>
 </body>
 </html>
