@@ -188,23 +188,30 @@
     }
 
     window.onload = function() {
-      Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vTnhTBgqkGkdw0cWUmYpqdbDhuJXqtc7GEVFA6Ld41CbAkqU396q9GVXlC0ngZ39mBHjypqSp0Jsa5p/pub?output=csv", {
+      Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vS652GQpE9v0dKqD605puYm6dZrZ84o7_Fv13LE1JcnbvF8gYg4O7jkbkF9iWdFPY1yt3VXgrihMTNT/pub?gid=86538123&single=true&output=csv", {
         download: true,
         header: true,
         complete: function(results) {
-          let tbodyResults = document.querySelector("#resultsTable tbody");
-          let tbodyStudents = document.querySelector("#studentTable tbody");
+          let tbody = document.querySelector("#resultsTable tbody");
+          tbody.innerHTML = "";
           results.data.forEach(row => {
-            if (row.Result) {
-              let tr = document.createElement("tr");
-              tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Result}</td>`;
-              tbodyResults.appendChild(tr);
-            }
-            if (row.Contact) {
-              let tr = document.createElement("tr");
-              tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Contact}</td>`;
-              tbodyStudents.appendChild(tr);
-            }
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Result}</td>`;
+            tbody.appendChild(tr);
+          });
+        }
+      });
+
+      Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vRo_yUFiJX55L8bs1PKX4zfflyX_spwX8usnw-4g41oltpDd9GuEqq_OGA2ELfnMFpLGiJVYXhp5lAX/pub?gid=171330624&single=true&output=csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+          let tbody = document.querySelector("#studentTable tbody");
+          tbody.innerHTML = "";
+          results.data.forEach(row => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Contact}</td>`;
+            tbody.appendChild(tr);
           });
         }
       });
