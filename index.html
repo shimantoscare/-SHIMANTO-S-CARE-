@@ -82,7 +82,7 @@
 </head>
 <body>
   <header>
-    <img src="logo.jpg" alt="Logo" />
+    <img src="images/logo.jpg" alt="Logo" />
     <div>
       <h1>SHIMANTO'S CARE</h1>
       <p>We Care to Make your Future Brighter</p>
@@ -161,6 +161,10 @@
     <p><strong>Address:</strong> East Khasbag Government Primary School. Satmatha Mahigonj Rangpur.<br>
     <strong>Phone:</strong> 01324-328791, 01616-698551<br>
     <strong>Email:</strong> shimantoscare9@gmail.com</p>
+    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/SA.Shifat088/" target="_blank">Shimanto's Care Director</a></p>
+    <p><strong>WhatsApp:</strong> 01324328791</p>
+    <p><strong>Website Developed By:</strong> <a href="https://www.facebook.com/SA.Shifat088/" target="_blank">SA Shifat</a><br>
+    <strong>Email:</strong> shahanuralo088@gmail.com</p>
   </div>
 
   <script>
@@ -193,7 +197,6 @@
         header: true,
         complete: function(results) {
           let tbody = document.querySelector("#resultsTable tbody");
-          tbody.innerHTML = "";
           results.data.forEach(row => {
             let tr = document.createElement("tr");
             tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Result}</td>`;
@@ -207,7 +210,6 @@
         header: true,
         complete: function(results) {
           let tbody = document.querySelector("#studentTable tbody");
-          tbody.innerHTML = "";
           results.data.forEach(row => {
             let tr = document.createElement("tr");
             tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Contact}</td>`;
