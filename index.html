@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,7 +82,7 @@
 </head>
 <body>
   <header>
-    <img src="images/logo.jpg" alt="Logo" />
+    <img src="logo.jpg" alt="Logo" />
     <div>
       <h1>SHIMANTO'S CARE</h1>
       <p>We Care to Make your Future Brighter</p>
@@ -193,16 +194,12 @@
         complete: function(results) {
           let tbodyResults = document.querySelector("#resultsTable tbody");
           let tbodyStudents = document.querySelector("#studentTable tbody");
-
           results.data.forEach(row => {
-            // Check if it's a result entry
             if (row.Result) {
               let tr = document.createElement("tr");
               tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Result}</td>`;
               tbodyResults.appendChild(tr);
             }
-
-            // If it's a student entry
             if (row.Contact) {
               let tr = document.createElement("tr");
               tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Contact}</td>`;
