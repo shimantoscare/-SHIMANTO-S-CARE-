@@ -3,13 +3,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SHIMANTO'S CARE</title>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background-color: #f8f8f8;
     }
     header {
@@ -81,7 +82,7 @@
 </head>
 <body>
   <header>
-    <img src="images/logo.jpg" alt="Logo" />
+    <img src="logo.jpg" alt="Logo" />
     <div>
       <h1>SHIMANTO'S CARE</h1>
       <p>We Care to Make your Future Brighter</p>
@@ -120,13 +121,12 @@
     <table id="resultsTable">
       <thead>
         <tr>
-          <th>Exam No.</th>
+          <th> Exam No.</th>
           <th>Roll</th>
           <th>Name</th>
-          <th>Class</th>
-          <th>Total Marks</th>
-          <th>Obtain Marks</th>
-          <th>Merit</th>
+          <th>Total Marks </th>
+          <th> Obtain Marks </th> 
+          <th> Merit </th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -143,7 +143,6 @@
           <th>Name</th>
           <th>Class</th>
           <th>Contact</th>
-          <th>Address</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -164,7 +163,7 @@
     <p><strong>Address:</strong> East Khasbag Government Primary School. Satmatha Mahigonj Rangpur.<br>
     <strong>Phone:</strong> 01324-328791, 01616-698551<br>
     <strong>Email:</strong> shimantoscare9@gmail.com</p>
-    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/shimanto.sid" target="_blank">Founder </a></p>
+    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/shimanto.sid" target="_blank">Founder</a></p>
     <p><strong>WhatsApp:</strong> 01324328791</p>
     <p><strong>Website Developed By:</strong> <a href="https://www.facebook.com/SA.Shifat088/" target="_blank">SA Shifat</a><br>
     <strong>Email:</strong> shahanuralom088@gmail.com</p>
@@ -202,7 +201,7 @@
           let tbody = document.querySelector("#resultsTable tbody");
           results.data.forEach(row => {
             let tr = document.createElement("tr");
-            tr.innerHTML = `<td>${row["Exam No"]}</td><td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row["Total Marks"]}</td><td>${row["Obtain Marks"]}</td><td>${row.Merit}</td>`;
+            tr.innerHTML = `<td>${row["Exam No"]}</td><td>${row["Roll"]}</td><td>${row["Name"]}</td><td>${row["Total Marks"]}</td><td>${row["Obtain Marks"]}</td><td>${row["Merit"]}</td>`;
             tbody.appendChild(tr);
           });
         }
@@ -215,7 +214,7 @@
           let tbody = document.querySelector("#studentTable tbody");
           results.data.forEach(row => {
             let tr = document.createElement("tr");
-            tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Contact}</td><td>${row.Address}</td>`;
+            tr.innerHTML = `<td>${row["Roll"]}</td><td>${row["Name"]}</td><td>${row["Class"]}</td><td>${row["Contact"]}</td>`;
             tbody.appendChild(tr);
           });
         }
