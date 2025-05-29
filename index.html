@@ -11,7 +11,6 @@
       margin: 0;
       padding: 0;
       background-color: #f8f8f8;
-      color: #333;
     }
     header {
       display: flex;
@@ -20,17 +19,13 @@
       background-color: #008080;
       color: white;
       padding: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     header img {
       height: 80px;
-      border-radius: 8px;
-      border: 2px solid #004d4d;
     }
     nav {
       background-color: #004d4d;
       overflow: hidden;
-      box-shadow: inset 0 -3px 5px rgba(0,0,0,0.2);
     }
     nav a {
       float: left;
@@ -39,20 +34,13 @@
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
-      font-weight: 600;
-      transition: background-color 0.3s;
     }
-    nav a:hover, nav a.active {
+    nav a:hover {
       background-color: #006666;
     }
     .container {
       padding: 20px;
       display: none;
-      max-width: 900px;
-      margin: 20px auto;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     .active {
       display: block;
@@ -62,35 +50,18 @@
       margin-bottom: 20px;
       width: 100%;
       max-width: 400px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1rem;
-      box-sizing: border-box;
-      transition: border-color 0.3s;
-    }
-    input[type="text"]:focus, textarea:focus {
-      border-color: #008080;
-      outline: none;
-      box-shadow: 0 0 5px #008080;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 0.95rem;
     }
     th, td {
       border: 1px solid #ccc;
-      padding: 10px 12px;
+      padding: 10px;
       text-align: left;
     }
     th {
-      background-color: #e0f2f2;
-      font-weight: 700;
-      color: #004d4d;
-    }
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
+      background-color: #ddd;
     }
     form {
       max-width: 500px;
@@ -98,7 +69,6 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
     }
     form button {
       padding: 10px 20px;
@@ -106,12 +76,6 @@
       color: white;
       border: none;
       cursor: pointer;
-      font-weight: 600;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-    form button:hover {
-      background-color: #006666;
     }
     #classFilter button {
       margin-right: 5px;
@@ -120,22 +84,9 @@
       color: white;
       border: none;
       cursor: pointer;
-      border-radius: 4px;
-      font-weight: 600;
-      transition: background-color 0.3s;
     }
     #classFilter button:hover {
       background-color: #006666;
-    }
-    #classFilter button.activeFilter {
-      background-color: #008080;
-    }
-    p a {
-      color: #008080;
-      text-decoration: none;
-    }
-    p a:hover {
-      text-decoration: underline;
     }
   </style>
 </head>
@@ -148,12 +99,12 @@
     </div>
   </header>
   <nav>
-    <a href="#home" onclick="showSection('home'); setActiveNav(this)" class="active">Home</a>
-    <a href="#notices" onclick="showSection('notices'); setActiveNav(this)">Notices</a>
-    <a href="#results" onclick="showSection('results'); setActiveNav(this)">Results</a>
-    <a href="#students" onclick="showSection('students'); setActiveNav(this)">Students</a>
-    <a href="#teachers" onclick="showSection('teachers'); setActiveNav(this)">Teachers</a>
-    <a href="#contact" onclick="showSection('contact'); setActiveNav(this)">Contact</a>
+    <a href="#home" onclick="showSection('home')">Home</a>
+    <a href="#notices" onclick="showSection('notices')">Notices</a>
+    <a href="#results" onclick="showSection('results')">Results</a>
+    <a href="#students" onclick="showSection('students')">Students</a>
+    <a href="#teachers" onclick="showSection('teachers')">Teachers</a>
+    <a href="#contact" onclick="showSection('contact')">Contact</a>
   </nav>
 
   <div class="container active" id="home">
@@ -197,15 +148,15 @@
   <div class="container" id="students">
     <h2>Student List</h2>
     <div id="classFilter">
-      <button onclick="filterByClass('All'); setActiveFilter(this)" class="activeFilter">All</button>
-      <button onclick="filterByClass('3'); setActiveFilter(this)">Class 3</button>
-      <button onclick="filterByClass('4'); setActiveFilter(this)">Class 4</button>
-      <button onclick="filterByClass('5'); setActiveFilter(this)">Class 5</button>
-      <button onclick="filterByClass('6'); setActiveFilter(this)">Class 6</button>
-      <button onclick="filterByClass('7'); setActiveFilter(this)">Class 7</button>
-      <button onclick="filterByClass('8'); setActiveFilter(this)">Class 8</button>
-      <button onclick="filterByClass('9'); setActiveFilter(this)">Class 9</button>
-      <button onclick="filterByClass('10'); setActiveFilter(this)">Class 10</button>
+      <button onclick="filterByClass('All')">All</button>
+      <button onclick="filterByClass('3')">Class 3</button>
+      <button onclick="filterByClass('4')">Class 4</button>
+      <button onclick="filterByClass('5')">Class 5</button>
+      <button onclick="filterByClass('6')">Class 6</button>
+      <button onclick="filterByClass('7')">Class 7</button>
+      <button onclick="filterByClass('8')">Class 8</button>
+      <button onclick="filterByClass('9')">Class 9</button>
+      <button onclick="filterByClass('10')">Class 10</button>
     </div>
     <input type="text" id="studentSearch" onkeyup="searchStudent()" placeholder="Search by name or class...">
     <table id="studentTable">
@@ -234,7 +185,11 @@
           <th>Email</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        <!-- Teachers data can be hardcoded or fetched similarly -->
+        <tr><td>Rahim Uddin</td><td>Math</td><td>017xxxxxxx</td><td>rahim@example.com</td></tr>
+        <tr><td>Karim Ahmed</td><td>Physics</td><td>018xxxxxxx</td><td>karim@example.com</td></tr>
+      </tbody>
     </table>
   </div>
 
@@ -252,7 +207,7 @@
     <p><strong>Address:</strong> East Khasbag Government Primary School. Satmatha Mahigonj Rangpur.<br>
     <strong>Phone:</strong> 01324-328791, 01616-698551<br>
     <strong>Email:</strong> shimantoscare9@gmail.com</p>
-    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/shimanto.sid" target="_blank">Founder</a></p>
+    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/shimanto.sid" target="_blank">Founder </a></p>
     <p><strong>WhatsApp:</strong> 01324328791</p>
     <p><strong>Website Developed By:</strong> <a href="https://www.facebook.com/SA.Shifat088/" target="_blank">SA Shifat</a><br>
     <strong>Email:</strong> shahanuralom088@gmail.com</p>
@@ -263,4 +218,74 @@
       document.querySelectorAll('.container').forEach(div => {
         div.classList.remove('active');
       });
-      document.getElementById
+      document.getElementById(id).classList.add('active');
+    }
+
+    function searchTable() {
+      let input = document.getElementById("searchInput").value.toUpperCase();
+      let trs = document.querySelectorAll("#resultsTable tbody tr");
+      trs.forEach(row => {
+        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
+      });
+    }
+
+    function searchStudent() {
+      let input = document.getElementById("studentSearch").value.toUpperCase();
+      let trs = document.querySelectorAll("#studentTable tbody tr");
+      trs.forEach(row => {
+        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
+      });
+    }
+
+    function filterByClass(className) {
+      let trs = document.querySelectorAll("#studentTable tbody tr");
+      trs.forEach(row => {
+        let classCell = row.children[2].textContent;
+        row.style.display = (className === "All" || classCell === className) ? "" : "none";
+      });
+    }
+
+    function searchTeacher() {
+      let input = document.getElementById("teacherSearch").value.toUpperCase();
+      let trs = document.querySelectorAll("#teacherTable tbody tr");
+      trs.forEach(row => {
+        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
+      });
+    }
+
+    window.onload = function() {
+      // Load Results data
+      Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vTUAQMW6rW1ovaxzE2zpPfm8upizMfkMcVJfkRqzBTZu5d_MmUxdljXn7Jnq0AUD_Lj2apRbFmjFhsn/pub?gid=1721289728&single=true&output=csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+          let tbody = document.querySelector("#resultsTable tbody");
+          results.data.forEach(row => {
+            if(row["Exam No"] && row["Roll"]) { // ignore empty rows
+              let tr = document.createElement("tr");
+              tr.innerHTML = `<td>${row["Exam No"]}</td><td>${row["Roll"]}</td><td>${row["Name"]}</td><td>${row["Class"]}</td><td>${row["Total Marks"]}</td><td>${row["Obtain Marks"]}</td><td>${row["Merit"]}</td>`;
+              tbody.appendChild(tr);
+            }
+          });
+        }
+      });
+
+      // Load Students data
+      Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vTjCQcsY8go1coLBL9bra4JA5TlMO9Oyro_eWeCqjWFTNm_bJUQbZYDX3Q5_Tp1E86VO2lGUoH8TjAt/pub?gid=855394095&single=true&output=csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+          let tbody = document.querySelector("#studentTable tbody");
+          results.data.forEach(row => {
+            if(row["Roll"]) { // ignore empty rows
+              let tr = document.createElement("tr");
+              tr.innerHTML = `<td>${row["Roll"]}</td><td>${row["Name"]}</td><td>${row["Class"]}</td><td>${row["Contact"]}</td><td>${row["Address"]}</td>`;
+              tbody.appendChild(tr);
+            }
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
