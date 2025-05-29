@@ -203,7 +203,7 @@
           let tbody = document.querySelector("#resultsTable tbody");
           results.data.forEach(row => {
             let tr = document.createElement("tr");
-            tr.innerHTML = `<td>${row.Roll}</td><td>${row.Name}</td><td>${row.Class}</td><td>${row.Result}</td>`;
+            tr.innerHTML = `<td>${row.Exam No}</td><td>${row.Roll}</td><td>${row.Name}</td><td>${row.Total Marks}</td><td>${row.Obtain Marks}</td><td>${row.Merit}</td>`;
             tbody.appendChild(tr);
           });
         }
