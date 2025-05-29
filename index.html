@@ -34,6 +34,7 @@
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
+      cursor: pointer;
     }
     nav a:hover {
       background-color: #006666;
@@ -45,19 +46,16 @@
     .active {
       display: block;
     }
-    input[type="text"], input[type="email"], textarea {
+    input[type="text"], textarea {
       padding: 10px;
       margin-bottom: 20px;
       width: 100%;
       max-width: 400px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      display: none; /* hide initially until data loads */
     }
     th, td {
       border: 1px solid #ccc;
@@ -80,10 +78,6 @@
       color: white;
       border: none;
       cursor: pointer;
-      border-radius: 4px;
-    }
-    form button:hover {
-      background-color: #006666;
     }
     #classFilter button {
       margin-right: 5px;
@@ -92,22 +86,12 @@
       color: white;
       border: none;
       cursor: pointer;
-      border-radius: 4px;
     }
     #classFilter button:hover {
       background-color: #006666;
     }
-    #classFilter button.active {
-      background-color: #006666;
-    }
-    a {
-      color: #008080;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    #loadingResults, #loadingStudents {
+    /* Loading text style */
+    .loading {
       font-style: italic;
       color: #555;
     }
@@ -122,12 +106,12 @@
     </div>
   </header>
   <nav>
-    <a href="#home" onclick="showSection('home')">Home</a>
-    <a href="#notices" onclick="showSection('notices')">Notices</a>
-    <a href="#results" onclick="showSection('results')">Results</a>
-    <a href="#students" onclick="showSection('students')">Students</a>
-    <a href="#teachers" onclick="showSection('teachers')">Teachers</a>
-    <a href="#contact" onclick="showSection('contact')">Contact</a>
+    <a onclick="showSection('home')">Home</a>
+    <a onclick="showSection('notices')">Notices</a>
+    <a onclick="showSection('results')">Results</a>
+    <a onclick="showSection('students')">Students</a>
+    <a onclick="showSection('teachers')">Teachers</a>
+    <a onclick="showSection('contact')">Contact</a>
   </nav>
 
   <div class="container active" id="home">
@@ -152,8 +136,8 @@
   <div class="container" id="results">
     <h2>Search Exam Results</h2>
     <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Enter Roll or Name..." />
-    <p id="loadingResults">Loading results...</p>
-    <table id="resultsTable" style="display:none;">
+    <p id="loadingResults" class="loading">Loading results data...</p>
+    <table id="resultsTable">
       <thead>
         <tr>
           <th>Exam No.</th>
@@ -172,19 +156,19 @@
   <div class="container" id="students">
     <h2>Student List</h2>
     <div id="classFilter">
-      <button class="active" onclick="filterByClass('All', event)">All</button>
-      <button onclick="filterByClass('3', event)">Class 3</button>
-      <button onclick="filterByClass('4', event)">Class 4</button>
-      <button onclick="filterByClass('5', event)">Class 5</button>
-      <button onclick="filterByClass('6', event)">Class 6</button>
-      <button onclick="filterByClass('7', event)">Class 7</button>
-      <button onclick="filterByClass('8', event)">Class 8</button>
-      <button onclick="filterByClass('9', event)">Class 9</button>
-      <button onclick="filterByClass('10', event)">Class 10</button>
+      <button onclick="filterByClass('All')">All</button>
+      <button onclick="filterByClass('3')">Class 3</button>
+      <button onclick="filterByClass('4')">Class 4</button>
+      <button onclick="filterByClass('5')">Class 5</button>
+      <button onclick="filterByClass('6')">Class 6</button>
+      <button onclick="filterByClass('7')">Class 7</button>
+      <button onclick="filterByClass('8')">Class 8</button>
+      <button onclick="filterByClass('9')">Class 9</button>
+      <button onclick="filterByClass('10')">Class 10</button>
     </div>
-    <input type="text" id="studentSearch" onkeyup="searchStudent()" placeholder="Search by name or class..." />
-    <p id="loadingStudents">Loading students...</p>
-    <table id="studentTable" style="display:none;">
+    <input type="text" id="studentSearch" onkeyup="searchStudent()" placeholder="Search by name or class...">
+    <p id="loadingStudents" class="loading">Loading student data...</p>
+    <table id="studentTable">
       <thead>
         <tr>
           <th>Roll</th>
@@ -200,7 +184,7 @@
 
   <div class="container" id="teachers">
     <h2>Our Teachers</h2>
-    <input type="text" id="teacherSearch" onkeyup="searchTeacher()" placeholder="Search by name or subject..." />
+    <input type="text" id="teacherSearch" onkeyup="searchTeacher()" placeholder="Search by name or subject...">
     <table id="teacherTable">
       <thead>
         <tr>
@@ -211,40 +195,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Rahim Uddin</td>
-          <td>Math</td>
-          <td><a href="tel:017xxxxxxx">017xxxxxxx</a></td>
-          <td><a href="mailto:rahim@example.com">rahim@example.com</a></td>
-        </tr>
-        <tr>
-          <td>Karim Ahmed</td>
-          <td>Physics</td>
-          <td><a href="tel:018xxxxxxx">018xxxxxxx</a></td>
-          <td><a href="mailto:karim@example.com">karim@example.com</a></td>
-        </tr>
+        <tr><td>Rahim Uddin</td><td>Math</td><td>017xxxxxxx</td><td>rahim@example.com</td></tr>
+        <tr><td>Karim Ahmed</td><td>Physics</td><td>018xxxxxxx</td><td>karim@example.com</td></tr>
       </tbody>
     </table>
   </div>
 
   <div class="container" id="contact">
     <h2>Contact Us</h2>
-    <form onsubmit="alert('Thank you for contacting us!'); return false;">
+    <form onsubmit="return false;">
       <label for="name">Name:</label><br />
       <input type="text" id="name" name="name" required /><br />
       <label for="email">Email:</label><br />
-      <input type="email" id="email" name="email" required /><br />
+      <input type="text" id="email" name="email" required /><br />
       <label for="message">Message:</label><br />
       <textarea id="message" name="message" rows="4" required></textarea><br />
       <button type="submit">Send</button>
     </form>
     <p><strong>Address:</strong> East Khasbag Government Primary School. Satmatha Mahigonj Rangpur.<br />
       <strong>Phone:</strong> 01324-328791, 01616-698551<br />
-      <strong>Email:</strong> <a href="mailto:shimantoscare9@gmail.com">shimantoscare9@gmail.com</a></p>
+      <strong>Email:</strong> shimantoscare9@gmail.com</p>
     <p><strong>Facebook:</strong> <a href="https://www.facebook.com/shimanto.sid" target="_blank">Founder</a></p>
     <p><strong>WhatsApp:</strong> 01324328791</p>
     <p><strong>Website Developed By:</strong> <a href="https://www.facebook.com/SA.Shifat088/" target="_blank">SA Shifat</a><br />
-      <strong>Email:</strong> <a href="mailto:shahanuralom088@gmail.com">shahanuralom088@gmail.com</a></p>
+      <strong>Email:</strong> shahanuralom088@gmail.com</p>
   </div>
 
   <script>
@@ -256,58 +230,50 @@
     }
 
     function searchTable() {
-      const input = document.getElementById("searchInput").value.toUpperCase();
-      const trs = document.querySelectorAll("#resultsTable tbody tr");
+      let input = document.getElementById("searchInput").value.toUpperCase();
+      let trs = document.querySelectorAll("#resultsTable tbody tr");
       trs.forEach(row => {
-        row.style.display = [...row.children].some(td =>
-          td.textContent.toUpperCase().includes(input)
-        ) ? "" : "none";
+        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
       });
     }
 
     function searchStudent() {
-      const input = document.getElementById("studentSearch").value.toUpperCase();
-      const trs = document.querySelectorAll("#studentTable tbody tr");
+      let input = document.getElementById("studentSearch").value.toUpperCase();
+      let trs = document.querySelectorAll("#studentTable tbody tr");
       trs.forEach(row => {
-        row.style.display = [...row.children].some(td =>
-          td.textContent.toUpperCase().includes(input)
-        ) ? "" : "none";
+        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
       });
     }
 
-    function filterByClass(className, event) {
-      const trs = document.querySelectorAll("#studentTable tbody tr");
+    function filterByClass(className) {
+      let trs = document.querySelectorAll("#studentTable tbody tr");
       trs.forEach(row => {
-        const classCell = row.children[2].textContent;
+        let classCell = row.children[2].textContent;
         row.style.display = (className === "All" || classCell === className) ? "" : "none";
       });
-
-      // Highlight active button
-      document.querySelectorAll("#classFilter button").forEach(btn => {
-        btn.classList.remove("active");
-      });
-      event.currentTarget.classList.add("active");
     }
 
     function searchTeacher() {
-      const input = document.getElementById("teacherSearch").value.toUpperCase();
-      const trs = document.querySelectorAll("#teacherTable tbody tr");
+      let input = document.getElementById("teacherSearch").value.toUpperCase();
+      let trs = document.querySelectorAll("#teacherTable tbody tr");
       trs.forEach(row => {
-        row.style.display = [...row.children].some(td =>
-          td.textContent.toUpperCase().includes(input)
-        ) ? "" : "none";
+        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
       });
     }
 
-    // Load CSV data for results
-    Papa.parse("csv/results.csv", {
+    // Your Google Sheets CSV URLs
+    const resultsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTUAQMW6rW1ovaxzE2zpPfm8upizMfkMcVJfkRqzBTZu5d_MmUxdljXn7Jnq0AUD_Lj2apRbFmjFhsn/pub?gid=1721289728&single=true&output=csv";
+    const studentsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTjCQcsY8go1coLBL9bra4JA5TlMO9Oyro_eWeCqjWFTNm_bJUQbZYDX3Q5_Tp1E86VO2lGUoH8TjAt/pub?gid=855394095&single=true&output=csv";
+
+    // Load Results Data
+    Papa.parse(resultsCsvUrl, {
       download: true,
       header: true,
       complete: function(results) {
         const tbody = document.querySelector("#resultsTable tbody");
         tbody.innerHTML = "";
         results.data.forEach(row => {
-          if(row['examno'] && row['roll'] && row['name']){
+          if(row.examno && row.roll && row.name) {
             const tr = document.createElement("tr");
             tr.innerHTML = `
               <td>${row.examno}</td>
@@ -326,15 +292,15 @@
       }
     });
 
-    // Load CSV data for students
-    Papa.parse("csv/student.csv", {
+    // Load Students Data
+    Papa.parse(studentsCsvUrl, {
       download: true,
       header: true,
       complete: function(results) {
         const tbody = document.querySelector("#studentTable tbody");
         tbody.innerHTML = "";
         results.data.forEach(row => {
-          if(row['roll'] && row['name']){
+          if(row.roll && row.name) {
             const tr = document.createElement("tr");
             tr.innerHTML = `
               <td>${row.roll}</td>
