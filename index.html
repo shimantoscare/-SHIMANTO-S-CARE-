@@ -1,321 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SHIMANTO'S CARE</title>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f8f8f8;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      background-color: #008080;
-      color: white;
-      padding: 20px;
-    }
-    header img {
-      height: 80px;
-    }
-    nav {
-      background-color: #004d4d;
-      overflow: hidden;
-    }
-    nav a {
-      float: left;
-      display: block;
-      color: white;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    nav a:hover {
-      background-color: #006666;
-    }
-    .container {
-      padding: 20px;
-      display: none;
-    }
-    .active {
-      display: block;
-    }
-    input[type="text"], textarea {
-      padding: 10px;
-      margin-bottom: 20px;
-      width: 100%;
-      max-width: 400px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      display: none; /* hide initially until data loads */
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: #ddd;
-    }
-    form {
-      max-width: 500px;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    form button {
-      padding: 10px 20px;
-      background-color: #008080;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    #classFilter button {
-      margin-right: 5px;
-      padding: 8px 12px;
-      background-color: #004d4d;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    #classFilter button:hover {
-      background-color: #006666;
-    }
-    /* Loading text style */
-    .loading {
-      font-style: italic;
-      color: #555;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <img src="images/logo.jpg" alt="Logo" />
-    <div>
-      <h1>SHIMANTO'S CARE</h1>
-      <p>We Care to Make your Future Brighter</p>
-    </div>
-  </header>
-  <nav>
-    <a onclick="showSection('home')">Home</a>
-    <a onclick="showSection('notices')">Notices</a>
-    <a onclick="showSection('results')">Results</a>
-    <a onclick="showSection('students')">Students</a>
-    <a onclick="showSection('teachers')">Teachers</a>
-    <a onclick="showSection('contact')">Contact</a>
-  </nav>
+// Replace these URLs with your actual Google Sheets CSV publish links
+const resultsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?output=csv";
+const studentsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?output=csv";
 
-  <div class="container active" id="home">
-    <h2>About Us</h2>
-    <p>SHIMANTO'S CARE is a trusted coaching center dedicated to helping students achieve academic excellence through structured guidance, experienced teachers, and personalized attention.</p>
-  </div>
-
-  <div class="container" id="notices">
-    <h2>Notices</h2>
-    <ul>
-      <li>📢 প্রতিদিন ক্লাস টেস্ট এবং অন্যান্য বিষয়ের ক্লাস হবে।</li>
-      <li>📢 ক্লাস টেস্টে অংশগ্রহণ বাধ্যতামূলক।</li>
-      <li>📢 প্রতিদিনের ক্লাস টেস্টের রেজাল্ট মেসেজের মাধ্যমে জানিয়ে দেওয়া হবে।</li>
-      <li>📢 প্রতিটি ছাত্রছাত্রীকে সময়মতো কোচিংয়ে উপস্থিত থাকতে হবে।</li>
-      <li>📢 অনুপস্থিত শিক্ষার্থীর অভিভাবককে ফোনে জানানো হবে।</li>
-      <li>📢 পরীক্ষার রুটিন ওয়েবসাইট এবং কোচিং অফিসে প্রকাশ করা হয়েছে।</li>
-      <li>📢 ভালো ফলাফলের জন্য ক্লাসে মনোযোগ এবং নিয়মিত উপস্থিতি জরুরি।</li>
-      <li>📢 সকল তথ্য ওয়েবসাইটে নিয়মিত আপডেট করা হবে, নিয়মিত ভিজিট করুন।</li>
-    </ul>
-  </div>
-
-  <div class="container" id="results">
-    <h2>Search Exam Results</h2>
-    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Enter Roll or Name..." />
-    <p id="loadingResults" class="loading">Loading results data...</p>
-    <table id="resultsTable">
-      <thead>
-        <tr>
-          <th>Exam No.</th>
-          <th>Roll</th>
-          <th>Name</th>
-          <th>Class</th>
-          <th>Total Marks</th>
-          <th>Obtain Marks</th>
-          <th>Merit</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-
-  <div class="container" id="students">
-    <h2>Student List</h2>
-    <div id="classFilter">
-      <button onclick="filterByClass('All')">All</button>
-      <button onclick="filterByClass('3')">Class 3</button>
-      <button onclick="filterByClass('4')">Class 4</button>
-      <button onclick="filterByClass('5')">Class 5</button>
-      <button onclick="filterByClass('6')">Class 6</button>
-      <button onclick="filterByClass('7')">Class 7</button>
-      <button onclick="filterByClass('8')">Class 8</button>
-      <button onclick="filterByClass('9')">Class 9</button>
-      <button onclick="filterByClass('10')">Class 10</button>
-    </div>
-    <input type="text" id="studentSearch" onkeyup="searchStudent()" placeholder="Search by name or class...">
-    <p id="loadingStudents" class="loading">Loading student data...</p>
-    <table id="studentTable">
-      <thead>
-        <tr>
-          <th>Roll</th>
-          <th>Name</th>
-          <th>Class</th>
-          <th>Contact</th>
-          <th>Address</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-
-  <div class="container" id="teachers">
-    <h2>Our Teachers</h2>
-    <input type="text" id="teacherSearch" onkeyup="searchTeacher()" placeholder="Search by name or subject...">
-    <table id="teacherTable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Subject</th>
-          <th>Contact</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Rahim Uddin</td><td>Math</td><td>017xxxxxxx</td><td>rahim@example.com</td></tr>
-        <tr><td>Karim Ahmed</td><td>Physics</td><td>018xxxxxxx</td><td>karim@example.com</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="container" id="contact">
-    <h2>Contact Us</h2>
-    <form onsubmit="return false;">
-      <label for="name">Name:</label><br />
-      <input type="text" id="name" name="name" required /><br />
-      <label for="email">Email:</label><br />
-      <input type="text" id="email" name="email" required /><br />
-      <label for="message">Message:</label><br />
-      <textarea id="message" name="message" rows="4" required></textarea><br />
-      <button type="submit">Send</button>
-    </form>
-    <p><strong>Address:</strong> East Khasbag Government Primary School. Satmatha Mahigonj Rangpur.<br />
-      <strong>Phone:</strong> 01324-328791, 01616-698551<br />
-      <strong>Email:</strong> shimantoscare9@gmail.com</p>
-    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/shimanto.sid" target="_blank">Founder</a></p>
-    <p><strong>WhatsApp:</strong> 01324328791</p>
-    <p><strong>Website Developed By:</strong> <a href="https://www.facebook.com/SA.Shifat088/" target="_blank">SA Shifat</a><br />
-      <strong>Email:</strong> shahanuralom088@gmail.com</p>
-  </div>
-
-  <script>
-    function showSection(id) {
-      document.querySelectorAll('.container').forEach(div => {
-        div.classList.remove('active');
-      });
-      document.getElementById(id).classList.add('active');
-    }
-
-    function searchTable() {
-      let input = document.getElementById("searchInput").value.toUpperCase();
-      let trs = document.querySelectorAll("#resultsTable tbody tr");
-      trs.forEach(row => {
-        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
-      });
-    }
-
-    function searchStudent() {
-      let input = document.getElementById("studentSearch").value.toUpperCase();
-      let trs = document.querySelectorAll("#studentTable tbody tr");
-      trs.forEach(row => {
-        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
-      });
-    }
-
-    function filterByClass(className) {
-      let trs = document.querySelectorAll("#studentTable tbody tr");
-      trs.forEach(row => {
-        let classCell = row.children[2].textContent;
-        row.style.display = (className === "All" || classCell === className) ? "" : "none";
-      });
-    }
-
-    function searchTeacher() {
-      let input = document.getElementById("teacherSearch").value.toUpperCase();
-      let trs = document.querySelectorAll("#teacherTable tbody tr");
-      trs.forEach(row => {
-        row.style.display = [...row.children].some(td => td.textContent.toUpperCase().includes(input)) ? "" : "none";
-      });
-    }
-
-    // Your Google Sheets CSV URLs
-    const resultsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTUAQMW6rW1ovaxzE2zpPfm8upizMfkMcVJfkRqzBTZu5d_MmUxdljXn7Jnq0AUD_Lj2apRbFmjFhsn/pub?gid=1721289728&single=true&output=csv";
-    const studentsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTjCQcsY8go1coLBL9bra4JA5TlMO9Oyro_eWeCqjWFTNm_bJUQbZYDX3Q5_Tp1E86VO2lGUoH8TjAt/pub?gid=855394095&single=true&output=csv";
-
-    // Load Results Data
-    Papa.parse(resultsCsvUrl, {
-      download: true,
-      header: true,
-      complete: function(results) {
-        const tbody = document.querySelector("#resultsTable tbody");
-        tbody.innerHTML = "";
-        results.data.forEach(row => {
-          if(row.examno && row.roll && row.name) {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-              <td>${row.examno}</td>
-              <td>${row.roll}</td>
-              <td>${row.name}</td>
-              <td>${row.class}</td>
-              <td>${row.total_marks}</td>
-              <td>${row.obtain_marks}</td>
-              <td>${row.merit}</td>
-            `;
-            tbody.appendChild(tr);
-          }
-        });
-        document.getElementById("loadingResults").style.display = "none";
-        document.getElementById("resultsTable").style.display = "table";
+// Load CSV data for results from Google Sheets
+Papa.parse(resultsCsvUrl, {
+  download: true,
+  header: true,
+  complete: function(results) {
+    const tbody = document.querySelector("#resultsTable tbody");
+    tbody.innerHTML = "";
+    results.data.forEach(row => {
+      if(row['examno'] && row['roll'] && row['name']){
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.examno}</td>
+          <td>${row.roll}</td>
+          <td>${row.name}</td>
+          <td>${row.class}</td>
+          <td>${row.total_marks}</td>
+          <td>${row.obtain_marks}</td>
+          <td>${row.merit}</td>
+        `;
+        tbody.appendChild(tr);
       }
     });
+    document.getElementById("loadingResults").style.display = "none";
+    document.getElementById("resultsTable").style.display = "table";
+  }
+});
 
-    // Load Students Data
-    Papa.parse(studentsCsvUrl, {
-      download: true,
-      header: true,
-      complete: function(results) {
-        const tbody = document.querySelector("#studentTable tbody");
-        tbody.innerHTML = "";
-        results.data.forEach(row => {
-          if(row.roll && row.name) {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-              <td>${row.roll}</td>
-              <td>${row.name}</td>
-              <td>${row.class}</td>
-              <td><a href="tel:${row.phone}">${row.phone}</a></td>
-              <td>${row.address}</td>
-            `;
-            tbody.appendChild(tr);
-          }
-        });
-        document.getElementById("loadingStudents").style.display = "none";
-        document.getElementById("studentTable").style.display = "table";
+// Load CSV data for students from Google Sheets
+Papa.parse(studentsCsvUrl, {
+  download: true,
+  header: true,
+  complete: function(results) {
+    const tbody = document.querySelector("#studentTable tbody");
+    tbody.innerHTML = "";
+    results.data.forEach(row => {
+      if(row['roll'] && row['name']){
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.roll}</td>
+          <td>${row.name}</td>
+          <td>${row.class}</td>
+          <td><a href="tel:${row.phone}">${row.phone}</a></td>
+          <td>${row.address}</td>
+        `;
+        tbody.appendChild(tr);
       }
     });
-  </script>
-</body>
-</html>
+    document.getElementById("loadingStudents").style.display = "none";
+    document.getElementById("studentTable").style.display = "table";
+  }
+});
