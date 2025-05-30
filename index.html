@@ -2,22 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SHIMANTO'S CARE</title>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #eef6f7;
-      color: #333;
+      background-color: #f8f8f8;
     }
     header {
       display: flex;
       align-items: center;
       gap: 20px;
-      background-color: #006d77;
+      background-color: #008080;
       color: white;
       padding: 20px;
     }
@@ -25,7 +24,7 @@
       height: 80px;
     }
     nav {
-      background-color: #004c4c;
+      background-color: #004d4d;
       overflow: hidden;
     }
     nav a {
@@ -33,12 +32,11 @@
       display: block;
       color: white;
       text-align: center;
-      padding: 14px 20px;
+      padding: 14px 16px;
       text-decoration: none;
-      font-weight: bold;
     }
     nav a:hover {
-      background-color: #007373;
+      background-color: #006666;
     }
     .container {
       padding: 20px;
@@ -53,58 +51,65 @@
       width: 100%;
       max-width: 400px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 4px;
       box-sizing: border-box;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-top: 10px;
     }
     th, td {
-      border: 1px solid #ddd;
+      border: 1px solid #ccc;
       padding: 10px;
-      text-align: center;
+      text-align: left;
     }
     th {
-      background-color: #00b4d8;
-      color: white;
+      background-color: #ddd;
     }
     form {
       max-width: 500px;
       background-color: #fff;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     form button {
       padding: 10px 20px;
-      background-color: #006d77;
+      background-color: #008080;
       color: white;
       border: none;
       cursor: pointer;
       border-radius: 4px;
     }
     form button:hover {
-      background-color: #004c4c;
+      background-color: #006666;
     }
-    #classFilter button, #resultTypeFilter button {
-      margin: 5px;
-      padding: 8px 14px;
-      background-color: #007373;
+    #classFilter button {
+      margin-right: 5px;
+      padding: 8px 12px;
+      background-color: #004d4d;
       color: white;
       border: none;
-      border-radius: 4px;
       cursor: pointer;
+      border-radius: 4px;
     }
-    #classFilter button.active, #resultTypeFilter button.active {
-      background-color: #009999;
+    #classFilter button:hover {
+      background-color: #006666;
+    }
+    #classFilter button.active {
+      background-color: #006666;
+    }
+    a {
+      color: #008080;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
     }
     #loadingResults, #loadingStudents {
       font-style: italic;
-      color: #666;
+      color: #555;
     }
   </style>
 </head>
@@ -146,11 +151,6 @@
 
   <div class="container" id="results">
     <h2>Search Exam Results</h2>
-    <div id="resultTypeFilter">
-      <button onclick="loadResultType('daily')" class="active">Daily Test</button>
-      <button onclick="loadResultType('weekly')">Weekly Test</button>
-      <button onclick="loadResultType('monthly')">Monthly Test</button>
-    </div>
     <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Enter Roll or Name..." />
     <p id="loadingResults">Loading results...</p>
     <table id="resultsTable" style="display:none;">
@@ -169,50 +169,89 @@
     </table>
   </div>
 
-  <!-- Students and other sections remain the same -->
+  <div class="container" id="students">
+    <h2>Student List</h2>
+    <div id="classFilter">
+      <button class="active" onclick="filterByClass('All', event)">All</button>
+      <button onclick="filterByClass('3', event)">Class 3</button>
+      <button onclick="filterByClass('4', event)">Class 4</button>
+      <button onclick="filterByClass('5', event)">Class 5</button>
+      <button onclick="filterByClass('6', event)">Class 6</button>
+      <button onclick="filterByClass('7', event)">Class 7</button>
+      <button onclick="filterByClass('8', event)">Class 8</button>
+      <button onclick="filterByClass('9', event)">Class 9</button>
+      <button onclick="filterByClass('10', event)">Class 10</button>
+    </div>
+    <input type="text" id="studentSearch" onkeyup="searchStudent()" placeholder="Search by name or class..." />
+    <p id="loadingStudents">Loading students...</p>
+    <table id="studentTable" style="display:none;">
+      <thead>
+        <tr>
+          <th>Roll</th>
+          <th>Name</th>
+          <th>Class</th>
+          <th>Contact</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="container" id="teachers">
+    <h2>Our Teachers</h2>
+    <input type="text" id="teacherSearch" onkeyup="searchTeacher()" placeholder="Search by name or subject..." />
+    <table id="teacherTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Subject</th>
+          <th>Contact</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Rahim Uddin</td>
+          <td>Math</td>
+          <td><a href="tel:017xxxxxxx">017xxxxxxx</a></td>
+          <td><a href="mailto:rahim@example.com">rahim@example.com</a></td>
+        </tr>
+        <tr>
+          <td>Karim Ahmed</td>
+          <td>Physics</td>
+          <td><a href="tel:018xxxxxxx">018xxxxxxx</a></td>
+          <td><a href="mailto:karim@example.com">karim@example.com</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container" id="contact">
+    <h2>Contact Us</h2>
+    <form onsubmit="alert('Thank you for contacting us!'); return false;">
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" required /><br />
+      <label for="email">Email:</label><br />
+      <input type="email" id="email" name="email" required /><br />
+      <label for="message">Message:</label><br />
+      <textarea id="message" name="message" rows="4" required></textarea><br />
+      <button type="submit">Send</button>
+    </form>
+    <p><strong>Address:</strong> East Khasbag Government Primary School. Satmatha Mahigonj Rangpur.<br />
+      <strong>Phone:</strong> 01324-328791, 01616-698551<br />
+      <strong>Email:</strong> <a href="mailto:shimantoscare9@gmail.com">shimantoscare9@gmail.com</a></p>
+    <p><strong>Founder:</strong> <a href="https://www.facebook.com/shimanto.sid" target="_blank">Shimanto Sid </a></p>
+    <p><strong>WhatsApp:</strong> 01324328791</p>
+    <p><strong>Website Developed By:</strong> <a href="https://www.facebook.com/SA.Shifat088/" target="_blank">SA Shifat</a><br />
+      <strong>Email:</strong> <a href="mailto:shahanuralom088@gmail.com">shahanuralom088@gmail.com</a></p>
+  </div>
 
   <script>
-    const resultUrls = {
-      daily: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTUAQMW6rW1ovaxzE2zpPfm8upizMfkMcVJfkRqzBTZu5d_MmUxdljXn7Jnq0AUD_Lj2apRbFmjFhsn/pub?gid=1721289728&single=true&output=csv',
-      weekly: '', // Add your weekly sheet link
-      monthly: '' // Add your monthly sheet link
-    };
-
-    function loadResultType(type) {
-      document.getElementById("loadingResults").style.display = "block";
-      document.getElementById("resultsTable").style.display = "none";
-      document.querySelectorAll("#resultTypeFilter button").forEach(btn => btn.classList.remove("active"));
-      event.currentTarget.classList.add("active");
-
-      Papa.parse(resultUrls[type], {
-        download: true,
-        header: true,
-        complete: function(results) {
-          const tbody = document.querySelector("#resultsTable tbody");
-          tbody.innerHTML = "";
-          results.data.forEach(row => {
-            if (row['examno'] && row['roll'] && row['name']) {
-              const tr = document.createElement("tr");
-              tr.innerHTML = `
-                <td>${row.examno}</td>
-                <td>${row.roll}</td>
-                <td>${row.name}</td>
-                <td>${row.class}</td>
-                <td>${row.total_marks}</td>
-                <td>${row.obtain_marks}</td>
-                <td>${row.merit}</td>
-              `;
-              tbody.appendChild(tr);
-            }
-          });
-          document.getElementById("loadingResults").style.display = "none";
-          document.getElementById("resultsTable").style.display = "table";
-        }
-      });
-    }
-
     function showSection(id) {
-      document.querySelectorAll('.container').forEach(div => div.classList.remove('active'));
+      document.querySelectorAll('.container').forEach(div => {
+        div.classList.remove('active');
+      });
       document.getElementById(id).classList.add('active');
     }
 
@@ -226,8 +265,87 @@
       });
     }
 
-    // Load Daily Results by default
-    window.onload = () => loadResultType('daily');
+    function searchStudent() {
+      const input = document.getElementById("studentSearch").value.toUpperCase();
+      const trs = document.querySelectorAll("#studentTable tbody tr");
+      trs.forEach(row => {
+        row.style.display = [...row.children].some(td =>
+          td.textContent.toUpperCase().includes(input)
+        ) ? "" : "none";
+      });
+    }
+
+    function filterByClass(className, event) {
+      const trs = document.querySelectorAll("#studentTable tbody tr");
+      trs.forEach(row => {
+        const classCell = row.children[2].textContent;
+        row.style.display = (className === "All" || classCell === className) ? "" : "none";
+      });
+
+      // Highlight active button
+      document.querySelectorAll("#classFilter button").forEach(btn => {
+        btn.classList.remove("active");
+      });
+      event.currentTarget.classList.add("active");
+    }
+
+    function searchTeacher() {
+      const input = document.getElementById("teacherSearch").value.toUpperCase();
+      const trs = document.querySelectorAll("#teacherTable tbody tr");
+      trs.forEach(row => {
+        row.style.display = [...row.children].some(td =>
+          td.textContent.toUpperCase().includes(input)
+        ) ? "" : "none";
+      });
+    }
+    Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vTUAQMW6rW1ovaxzE2zpPfm8upizMfkMcVJfkRqzBTZu5d_MmUxdljXn7Jnq0AUD_Lj2apRbFmjFhsn/pub?gid=1721289728&single=true&output=csv", {
+      download: true,
+      header: true,
+      complete: function(results) {
+        const tbody = document.querySelector("#resultsTable tbody");
+        tbody.innerHTML = "";
+        results.data.forEach(row => {
+          if(row['examno'] && row['roll'] && row['name']){
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${row.examno}</td>
+              <td>${row.roll}</td>
+              <td>${row.name}</td>
+              <td>${row.class}</td>
+              <td>${row.total_marks}</td>
+              <td>${row.obtain_marks}</td>
+              <td>${row.merit}</td>
+            `;
+            tbody.appendChild(tr);
+          }
+        });
+        document.getElementById("loadingResults").style.display = "none";
+        document.getElementById("resultsTable").style.display = "table";
+      }
+    });
+    Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vTjCQcsY8go1coLBL9bra4JA5TlMO9Oyro_eWeCqjWFTNm_bJUQbZYDX3Q5_Tp1E86VO2lGUoH8TjAt/pub?gid=855394095&single=true&output=csv", {
+      download: true,
+      header: true,
+      complete: function(results) {
+        const tbody = document.querySelector("#studentTable tbody");
+        tbody.innerHTML = "";
+        results.data.forEach(row => {
+          if(row['roll'] && row['name']){
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${row.roll}</td>
+              <td>${row.name}</td>
+              <td>${row.class}</td>
+              <td><a href="tel:${row.phone}">${row.phone}</a></td>
+              <td>${row.address}</td>
+            `;
+            tbody.appendChild(tr);
+          }
+        });
+        document.getElementById("loadingStudents").style.display = "none";
+        document.getElementById("studentTable").style.display = "table";
+      }
+    });
   </script>
 </body>
 </html>
