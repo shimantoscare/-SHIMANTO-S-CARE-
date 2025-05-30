@@ -241,7 +241,7 @@
     <p><strong>Address:</strong> East Khasbag Government Primary School. Satmatha Mahigonj Rangpur.<br />
       <strong>Phone:</strong> 01324-328791, 01616-698551<br />
       <strong>Email:</strong> <a href="mailto:shimantoscare9@gmail.com">shimantoscare9@gmail.com</a></p>
-    <p><strong>Facebook:</strong> <a href="https://www.facebook.com/shimanto.sid" target="_blank">Founder</a></p>
+    <p><strong>Founder:</strong> <a href="https://www.facebook.com/shimanto.sid" target="_blank">Shimanto Sid </a></p>
     <p><strong>WhatsApp:</strong> 01324328791</p>
     <p><strong>Website Developed By:</strong> <a href="https://www.facebook.com/SA.Shifat088/" target="_blank">SA Shifat</a><br />
       <strong>Email:</strong> <a href="mailto:shahanuralom088@gmail.com">shahanuralom088@gmail.com</a></p>
@@ -298,9 +298,7 @@
         ) ? "" : "none";
       });
     }
-
-    // Load CSV data for results
-    Papa.parse("csv/results.csv", {
+    Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vTUAQMW6rW1ovaxzE2zpPfm8upizMfkMcVJfkRqzBTZu5d_MmUxdljXn7Jnq0AUD_Lj2apRbFmjFhsn/pub?gid=1721289728&single=true&output=csv", {
       download: true,
       header: true,
       complete: function(results) {
@@ -325,9 +323,7 @@
         document.getElementById("resultsTable").style.display = "table";
       }
     });
-
-    // Load CSV data for students
-    Papa.parse("csv/student.csv", {
+    Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vTjCQcsY8go1coLBL9bra4JA5TlMO9Oyro_eWeCqjWFTNm_bJUQbZYDX3Q5_Tp1E86VO2lGUoH8TjAt/pub?gid=855394095&single=true&output=csv", {
       download: true,
       header: true,
       complete: function(results) {
